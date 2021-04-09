@@ -2,7 +2,7 @@
   <div>
     <b-jumbotron>
       <template #lead>
-        {{ currentQuestions.question }}
+        {{ currentQuestion.question }}
       </template>
 
       <hr class="my-4" />
