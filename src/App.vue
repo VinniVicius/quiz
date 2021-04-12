@@ -5,7 +5,9 @@
       <b-row>
         <b-col sm="6" offset="3">
           <QuestionBox 
-            :question="currentQuestion[index]"
+            v-if="question.length"
+            :currentQuestion="question[index]"
+            :next="next"
            />
         </b-col>
       </b-row>
@@ -25,8 +27,13 @@ export default {
   },
   data(){
     return{
-      questions: [],
+      question: [],
       index: 0
+    }
+  },
+  methods:{
+    next(){
+      this.index++
     }
   },
   mounted: function(){
@@ -35,7 +42,7 @@ export default {
     }).then((response) => {
       return response.json()
     }).then((jsonData) => {
-      this.questions = jsonData.results
+      this.question = jsonData.results
     })
   }
 };
