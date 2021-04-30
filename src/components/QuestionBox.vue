@@ -9,10 +9,10 @@
 
       <b-list-group>
         <b-list-group-item
-          v-for="(answer, index) in answers"
+          v-for="(answer, index) in shuffledAnswers"
           :key="index"
           @click="selectAnswer(index)"
-          :class="[selectedIndex === index ? 'selected' : '']"
+          :class="answerClass(index)"
         >
           {{ answer }}
         </b-list-group-item>
@@ -82,6 +82,21 @@ export default {
       this.shuffledAnswers = _.shuffle(answers);
       this.correctIndex = this.shuffledAnswers.indexOf(this.currentQuestion.correct_answer)
     },
+    answerClass(index){
+      let answerClass = ''
+      if(!this.answered && this.selectedIndex === index){
+        answerClass = 'selected'
+      } else if (this.answered && this.correctIndex === index){
+        answerClass = 'correct'
+      } else if (this.answered && this.selectedIndex === index && this.correctIndex !== index) {
+        answerClass = 'incorrect'
+      }
+      return answerClass
+    /*[!answered && selectedIndex === index ? 'selected' : 
+          answered && correctIndex === index ? 'correct' : 
+          answered && selectedIndex === index && correctIndex !== index ? 'incorrect' : ''
+          ]*/
+    }
   },
 };
 </script>
@@ -110,9 +125,20 @@ export default {
   color: #fff;
 }
 .correct {
-  background-color: #198754;
+  background-color: #28a745;
+  color: #fff;
+}
+.correct:hover{
+  background-color: #4ac466;
+  color: #fff;
 }
 .incorrect {
   background-color: #dc3545;
+  color: #fff;
+}
+.incorrect:hover {
+  background-color: #ed495a;
+  color: #fff;
+
 }
 </style>
